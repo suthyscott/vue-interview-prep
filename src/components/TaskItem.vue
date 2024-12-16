@@ -1,7 +1,7 @@
 <script setup>
 import { defineEmits } from "vue"
 const emit = defineEmits(["removeTask", "toggleDone"])
-const { task } = defineProps({
+const props = defineProps({
     task: {
         taskName: String,
         done: Boolean,
@@ -10,19 +10,22 @@ const { task } = defineProps({
 })
 
 const removeTask = () => {
-    emit("removeTask", task.id)
+    emit("removeTask", props.task.id)
 }
-console.log("TaskItem", task)
+console.log("TaskItem", props.task)
 </script>
 
 <template>
     <div
         :class="`border flex w-60 justify-between m-4 ${
-            task.done && 'line-through'
+            props.task.done && 'line-through'
         }`"
     >
-        <p class="hover:cursor-pointer" @click="$emit('toggleDone', task.id)">
-            {{ task.taskName }}
+        <p
+            class="hover:cursor-pointer"
+            @click="$emit('toggleDone', props.task.id)"
+        >
+            {{ props.task.taskName }}
         </p>
         <button @click="removeTask">X</button>
     </div>
